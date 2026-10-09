@@ -1,0 +1,35 @@
+<div class="app">
+  <div class="chat">
+    <header class="header">
+      <div class="avatar">AI</div>
+      <div>
+        <div class="title">ИИ-агент</div>
+        <div class="status"><span class="dot"></span> онлайн</div>
+      </div>
+    </header>
+
+    <div class="messages" #scrollBox>
+      @for (msg of messages(); track $index) {
+        <div class="row" [class.user]="msg.role === 'user'">
+          <div class="bubble">{{ msg.text }}</div>
+        </div>
+      }
+
+      @if (loading()) {
+        <div class="row">
+          <div class="bubble typing"><span></span><span></span><span></span></div>
+        </div>
+      }
+    </div>
+
+    <div class="input-bar">
+      <input
+        type="text"
+        placeholder="Напишите сообщение..."
+        [(ngModel)]="input"
+        (keydown.enter)="send()"
+      />
+      <button (click)="send()" [disabled]="loading() || !input.trim()">➤</button>
+    </div>
+  </div>
+</div>
